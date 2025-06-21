@@ -1,0 +1,115 @@
+@namespace MealPlanner.Components
+@inject IJSRuntime JSRuntime
+
+<div class="login-component">
+    @if (string.IsNullOrEmpty(UserName))
+    {
+        <button class="btn btn-outline-primary btn-sm" @onclick="ShowLoginForm">Login</button>
+    }
+    else
+    {
+        <div class="user-info">
+            <span class="user-greeting">Hello, @UserName!</span>
+            <button class="btn btn-outline-secondary btn-sm ms-2" @onclick="ShowLoginForm">Change</button>
+        </div>
+    }
+</div>
+
+<!-- Bootstrap Modal -->
+<div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="loginModalLabel">Enter Your Name</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" @onclick="CancelLogin"></button>
+            </div>
+            <div class="modal-body">
+                <input type="text" class="form-control" @bind="tempUserName" @onkeypress="HandleKeyPress" placeholder="Your name" @ref="nameInput" />
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" @onclick="CancelLogin">Cancel</button>
+                <button type="button" class="btn btn-primary" @onclick="SaveUserName">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+    [Parameter] public string UserName { get; set; } = string.Empty;
+    [Parameter] public EventCallback<string> UserNameChanged { get; set; }
+    
+    private string tempUserName = string.Empty;
+    private ElementReference nameInput;
+
+    private async Task ShowLoginForm()
+    {
+        tempUserName = UserName;
+        try
+        {
+            await JSRuntime.InvokeVoidAsync("modalHelper.show", "loginModal");
+            // Focus the input after modal is shown
+            await Task.Delay(300);
+            await nameInput.FocusAsync();
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error showing modal: {ex.Message}");
+        }
+    }
+
+    private async Task SaveUserName()
+    {
+        if (!string.IsNullOrWhiteSpace(tempUserName))
+        {
+            UserName = tempUserName.Trim();
+            await UserNameChanged.InvokeAsync(UserName);
+        }
+        await HideModal();
+    }
+
+    private async Task CancelLogin()
+    {
+        tempUserName = string.Empty;
+        await HideModal();
+    }
+
+    private async Task HideModal()
+    {
+        try
+        {
+            await JSRuntime.InvokeVoidAsync("modalHelper.hide", "loginModal");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error hiding modal: {ex.Message}");
+        }
+    }
+
+    private async Task HandleKeyPress(KeyboardEventArgs e)
+    {
+        if (e.Key == "Enter")
+        {
+            await SaveUserName();
+        }
+        else if (e.Key == "Escape")
+        {
+            await CancelLogin();
+        }
+    }
+}
+
+<style>
+    .login-component {
+        display: inline-block;
+    }
+
+    .user-info {
+        display: flex;
+        align-items: center;
+    }
+
+    .user-greeting {
+        color: #495057;
+        font-size: 0.9em;
+    }
+</style>
