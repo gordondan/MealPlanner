@@ -1,0 +1,53 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MealPlanner.Web", "MealPlanner.Web", "{AC8F7F56-C60C-597E-6A1F-A8F13133AE92}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MealPlanner", "MealPlanner.Web\MealPlanner.csproj", "{D0B9D2B3-34FA-4238-89D6-EDF73749CFE3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MealPlanner.Tests", "MealPlanner.Tests\MealPlanner.Tests.csproj", "{4531A1AA-5DD5-481D-9DD1-B95D6C41B7B4}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|Any CPU = Release|Any CPU
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D0B9D2B3-34FA-4238-89D6-EDF73749CFE3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D0B9D2B3-34FA-4238-89D6-EDF73749CFE3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D0B9D2B3-34FA-4238-89D6-EDF73749CFE3}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{D0B9D2B3-34FA-4238-89D6-EDF73749CFE3}.Debug|x64.Build.0 = Debug|Any CPU
+		{D0B9D2B3-34FA-4238-89D6-EDF73749CFE3}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{D0B9D2B3-34FA-4238-89D6-EDF73749CFE3}.Debug|x86.Build.0 = Debug|Any CPU
+		{D0B9D2B3-34FA-4238-89D6-EDF73749CFE3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D0B9D2B3-34FA-4238-89D6-EDF73749CFE3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D0B9D2B3-34FA-4238-89D6-EDF73749CFE3}.Release|x64.ActiveCfg = Release|Any CPU
+		{D0B9D2B3-34FA-4238-89D6-EDF73749CFE3}.Release|x64.Build.0 = Release|Any CPU
+		{D0B9D2B3-34FA-4238-89D6-EDF73749CFE3}.Release|x86.ActiveCfg = Release|Any CPU
+		{D0B9D2B3-34FA-4238-89D6-EDF73749CFE3}.Release|x86.Build.0 = Release|Any CPU
+		{4531A1AA-5DD5-481D-9DD1-B95D6C41B7B4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4531A1AA-5DD5-481D-9DD1-B95D6C41B7B4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4531A1AA-5DD5-481D-9DD1-B95D6C41B7B4}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{4531A1AA-5DD5-481D-9DD1-B95D6C41B7B4}.Debug|x64.Build.0 = Debug|Any CPU
+		{4531A1AA-5DD5-481D-9DD1-B95D6C41B7B4}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{4531A1AA-5DD5-481D-9DD1-B95D6C41B7B4}.Debug|x86.Build.0 = Debug|Any CPU
+		{4531A1AA-5DD5-481D-9DD1-B95D6C41B7B4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4531A1AA-5DD5-481D-9DD1-B95D6C41B7B4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4531A1AA-5DD5-481D-9DD1-B95D6C41B7B4}.Release|x64.ActiveCfg = Release|Any CPU
+		{4531A1AA-5DD5-481D-9DD1-B95D6C41B7B4}.Release|x64.Build.0 = Release|Any CPU
+		{4531A1AA-5DD5-481D-9DD1-B95D6C41B7B4}.Release|x86.ActiveCfg = Release|Any CPU
+		{4531A1AA-5DD5-481D-9DD1-B95D6C41B7B4}.Release|x86.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{D0B9D2B3-34FA-4238-89D6-EDF73749CFE3} = {AC8F7F56-C60C-597E-6A1F-A8F13133AE92}
+	EndGlobalSection
+EndGlobal

@@ -8,7 +8,13 @@
       "Bash(git commit:*)",
       "Bash(git remote add:*)",
       "Bash(git push:*)",
-      "Bash(git pull:*)"
+      "Bash(git pull:*)",
+      "Bash(dotnet new:*)",
+      "Bash(mv:*)",
+      "Bash(cp:*)",
+      "Bash(dotnet sln:*)",
+      "Bash(dotnet restore:*)",
+      "Bash(dotnet test:*)"
     ],
     "deny": []
   }

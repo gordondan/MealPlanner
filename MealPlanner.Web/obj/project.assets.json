@@ -8,24 +8,32 @@
     "net9.0": []
   },
   "packageFolders": {
-    "/home/gordon/.nuget/packages/": {}
+    "C:\\Users\\gordon\\.nuget\\packages\\": {},
+    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/mnt/c/Users/gordon/source/repos/MealPlanner/MealPlanner.Web/MealPlanner.csproj",
+      "projectUniqueName": "C:\\Users\\gordon\\source\\repos\\MealPlanner\\MealPlanner.Web\\MealPlanner.csproj",
       "projectName": "MealPlanner",
-      "projectPath": "/mnt/c/Users/gordon/source/repos/MealPlanner/MealPlanner.Web/MealPlanner.csproj",
-      "packagesPath": "/home/gordon/.nuget/packages/",
-      "outputPath": "/mnt/c/Users/gordon/source/repos/MealPlanner/MealPlanner.Web/obj/",
+      "projectPath": "C:\\Users\\gordon\\source\\repos\\MealPlanner\\MealPlanner.Web\\MealPlanner.csproj",
+      "packagesPath": "C:\\Users\\gordon\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\gordon\\source\\repos\\MealPlanner\\MealPlanner.Web\\obj\\",
       "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+      ],
       "configFilePaths": [
-        "/home/gordon/.nuget/NuGet/NuGet.Config"
+        "C:\\Users\\gordon\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
         "net9.0"
       ],
       "sources": {
+        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+        "C:\\Program Files\\dotnet\\library-packs": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
@@ -44,7 +52,7 @@
         "auditLevel": "low",
         "auditMode": "direct"
       },
-      "SdkAnalysisLevel": "9.0.200"
+      "SdkAnalysisLevel": "9.0.300"
     },
     "frameworks": {
       "net9.0": {
@@ -68,7 +76,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/9.0.203/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.300/PortableRuntimeIdentifierGraph.json"
       }
     }
   }

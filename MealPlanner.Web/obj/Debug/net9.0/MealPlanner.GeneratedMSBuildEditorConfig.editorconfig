@@ -9,53 +9,53 @@ build_property.EnforceExtendedAnalyzerRules =
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = MealPlanner
 build_property.RootNamespace = MealPlanner
-build_property.ProjectDir = /mnt/c/Users/gordon/source/repos/MealPlanner/MealPlanner.Web/
+build_property.ProjectDir = C:\Users\gordon\source\repos\MealPlanner\MealPlanner.Web\
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = 
 build_property.RazorLangVersion = 9.0
 build_property.SupportLocalizedComponentNames = 
 build_property.GenerateRazorMetadataSourceChecksumAttributes = 
-build_property.MSBuildProjectDirectory = /mnt/c/Users/gordon/source/repos/MealPlanner/MealPlanner.Web
+build_property.MSBuildProjectDirectory = C:\Users\gordon\source\repos\MealPlanner\MealPlanner.Web
 build_property._RazorSourceGeneratorDebug = 
 build_property.EffectiveAnalysisLevelStyle = 9.0
 build_property.EnableCodeStyleSeverity = 
 
-[/mnt/c/Users/gordon/source/repos/MealPlanner/MealPlanner.Web/Components/App.razor]
-build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50cy9BcHAucmF6b3I=
+[C:/Users/gordon/source/repos/MealPlanner/MealPlanner.Web/Components/App.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xBcHAucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
-[/mnt/c/Users/gordon/source/repos/MealPlanner/MealPlanner.Web/Components/LikertSelector.razor]
-build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50cy9MaWtlcnRTZWxlY3Rvci5yYXpvcg==
+[C:/Users/gordon/source/repos/MealPlanner/MealPlanner.Web/Components/LikertSelector.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xMaWtlcnRTZWxlY3Rvci5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
-[/mnt/c/Users/gordon/source/repos/MealPlanner/MealPlanner.Web/Components/LoginComponent.razor]
-build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50cy9Mb2dpbkNvbXBvbmVudC5yYXpvcg==
+[C:/Users/gordon/source/repos/MealPlanner/MealPlanner.Web/Components/LoginComponent.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xMb2dpbkNvbXBvbmVudC5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
-[/mnt/c/Users/gordon/source/repos/MealPlanner/MealPlanner.Web/Components/Pages/Error.razor]
-build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50cy9QYWdlcy9FcnJvci5yYXpvcg==
+[C:/Users/gordon/source/repos/MealPlanner/MealPlanner.Web/Components/Pages/Error.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xFcnJvci5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
-[/mnt/c/Users/gordon/source/repos/MealPlanner/MealPlanner.Web/Components/Routes.razor]
-build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50cy9Sb3V0ZXMucmF6b3I=
+[C:/Users/gordon/source/repos/MealPlanner/MealPlanner.Web/Components/Routes.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xSb3V0ZXMucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
-[/mnt/c/Users/gordon/source/repos/MealPlanner/MealPlanner.Web/Components/_Imports.razor]
-build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50cy9fSW1wb3J0cy5yYXpvcg==
+[C:/Users/gordon/source/repos/MealPlanner/MealPlanner.Web/Components/_Imports.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xfSW1wb3J0cy5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
-[/mnt/c/Users/gordon/source/repos/MealPlanner/MealPlanner.Web/Components/Layout/MainLayout.razor]
-build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50cy9MYXlvdXQvTWFpbkxheW91dC5yYXpvcg==
-build_metadata.AdditionalFiles.CssScope = b-bl54lrbrtm
+[C:/Users/gordon/source/repos/MealPlanner/MealPlanner.Web/Components/Layout/MainLayout.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xMYXlvdXRcTWFpbkxheW91dC5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = b-0y45y30m6u
 
-[/mnt/c/Users/gordon/source/repos/MealPlanner/MealPlanner.Web/Components/Layout/NavMenu.razor]
-build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50cy9MYXlvdXQvTmF2TWVudS5yYXpvcg==
-build_metadata.AdditionalFiles.CssScope = b-azv7b1885v
+[C:/Users/gordon/source/repos/MealPlanner/MealPlanner.Web/Components/Layout/NavMenu.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xMYXlvdXRcTmF2TWVudS5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = b-ujemwe9ugv
 
-[/mnt/c/Users/gordon/source/repos/MealPlanner/MealPlanner.Web/Components/Pages/Home.razor]
-build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50cy9QYWdlcy9Ib21lLnJhem9y
-build_metadata.AdditionalFiles.CssScope = b-d5ejts4bwk
+[C:/Users/gordon/source/repos/MealPlanner/MealPlanner.Web/Components/Pages/Home.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xIb21lLnJhem9y
+build_metadata.AdditionalFiles.CssScope = b-xk4oxsnwg5
 
-[/mnt/c/Users/gordon/source/repos/MealPlanner/MealPlanner.Web/Components/Pages/MealPreferences.razor]
-build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50cy9QYWdlcy9NZWFsUHJlZmVyZW5jZXMucmF6b3I=
-build_metadata.AdditionalFiles.CssScope = b-ao9v276xss
+[C:/Users/gordon/source/repos/MealPlanner/MealPlanner.Web/Components/Pages/MealPreferences.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xNZWFsUHJlZmVyZW5jZXMucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = b-f9uluir0h2
