@@ -1,0 +1,161 @@
+@page "/meal-preferences"
+@inject FoodService FoodService
+@inject PreferencesService PreferencesService
+@inject UserStateService UserState
+@implements IDisposable
+
+<PageTitle>Meal Preferences</PageTitle>
+
+<h1>Meal Preferences</h1>
+
+@if (!UserState.IsLoggedIn)
+{
+    <div class="login-required">
+        <div class="alert alert-info">
+            <h4>Login Required</h4>
+            <p>Please login to rate your food preferences. Click the "Login" button in the top right corner to get started.</p>
+        </div>
+    </div>
+}
+else
+{
+    <p>Welcome @UserState.CurrentUser! Rate your food preferences to help us recommend meals you'll love!</p>
+
+    <div class="meal-rating-container">
+        <div class="action-buttons-top">
+            <button class="btn btn-outline-danger btn-sm" @onclick="ClearAllPreferences">Clear All</button>
+        </div>
+
+        @if (foodItems != null && foodItems.Any())
+        {
+            @foreach (var category in new[] { "Meal", "Snack", "Dessert" })
+            {
+                var categoryFoods = foodItems.Where(f => f.Category == category).ToList();
+                if (categoryFoods.Any())
+                {
+                    <div class="category-section">
+                        <h3>@category@(category == "Meal" ? "s" : category == "Snack" ? "s" : "s")</h3>
+                        <div class="food-ratings">
+                            @foreach (var food in categoryFoods)
+                            {
+                                <div class="food-rating-item">
+                                    <LikertSelector FoodDescription="@GetFoodDisplayName(food)"
+                                                   IsVertical="false"
+                                                   SelectedValue="@GetFoodRating(food)"
+                                                   OnValueChanged="@((value) => OnFoodRatingChanged(food, value))"
+                                                   IsEnabled="@UserState.IsLoggedIn" />
+                                </div>
+                            }
+                        </div>
+                    </div>
+                }
+            }
+            
+            @if (HasAnyRatings())
+            {
+                <div class="rating-summary">
+                    <h4>Your Ratings Summary</h4>
+                    @foreach (var category in new[] { "Meal", "Snack", "Dessert" })
+                    {
+                        var categoryFoods = foodItems.Where(f => f.Category == category && GetFoodRating(f) > 0).ToList();
+                        if (categoryFoods.Any())
+                        {
+                            <div class="category-summary">
+                                <h5>@category@(category == "Meal" ? "s" : category == "Snack" ? "s" : "s")</h5>
+                                @foreach (var food in categoryFoods)
+                                {
+                                    <p><strong>@food.Name:</strong> @GetRatingText(GetFoodRating(food))</p>
+                                }
+                            </div>
+                        }
+                    }
+                </div>
+            }
+        }
+        else
+        {
+            <p>Loading food items...</p>
+        }
+
+        <div class="action-buttons-bottom">
+            <button class="btn btn-outline-danger btn-sm" @onclick="ClearAllPreferences">Clear All</button>
+        </div>
+    </div>
+}
+
+@code {
+    private List<FoodItem> foodItems = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadFoodItems();
+        await PreferencesService.LoadPreferencesAsync();
+        UserState.OnUserChanged += OnUserChanged;
+        StateHasChanged();
+    }
+
+    private async Task LoadFoodItems()
+    {
+        foodItems = await FoodService.GetFoodItemsAsync();
+    }
+
+    private void OnUserChanged(string newUser)
+    {
+        InvokeAsync(StateHasChanged);
+    }
+
+    private int GetFoodRating(FoodItem food)
+    {
+        if (!UserState.IsLoggedIn) return 0;
+        return PreferencesService.GetFoodRating(UserState.CurrentUser, food.Category, food.Id);
+    }
+
+    private async Task OnFoodRatingChanged(FoodItem food, int value)
+    {
+        if (!UserState.IsLoggedIn) return;
+        
+        await PreferencesService.SetFoodRatingAsync(UserState.CurrentUser, food.Category, food.Id, value);
+        StateHasChanged();
+    }
+
+    private async Task ClearAllPreferences()
+    {
+        if (!UserState.IsLoggedIn) return;
+        
+        await PreferencesService.ClearUserPreferencesAsync(UserState.CurrentUser);
+        StateHasChanged();
+    }
+
+    private bool HasAnyRatings()
+    {
+        if (!UserState.IsLoggedIn) return false;
+        return foodItems.Any(f => GetFoodRating(f) > 0);
+    }
+
+    private string GetFoodDisplayName(FoodItem food)
+    {
+        var indicators = new List<string>();
+        if (food.NeedsFreezer) indicators.Add("❄️");
+        if (food.NeedsRefrigeration) indicators.Add("🧊");
+        
+        return indicators.Any() ? $"{food.Name} {string.Join(" ", indicators)}" : food.Name;
+    }
+
+    private string GetRatingText(int rating)
+    {
+        return rating switch
+        {
+            1 => "Yuck",
+            2 => "Meh",
+            3 => "Ok",
+            4 => "Good",
+            5 => "Great",
+            _ => "Not rated"
+        };
+    }
+
+    public void Dispose()
+    {
+        UserState.OnUserChanged -= OnUserChanged;
+    }
+}

@@ -1,0 +1,210 @@
+@namespace MealPlanner.Components
+
+<div class="login-component">
+    @if (string.IsNullOrEmpty(UserName))
+    {
+        <button class="btn btn-outline-primary btn-sm" @onclick="ShowLoginForm">Login</button>
+    }
+    else
+    {
+        <div class="user-info">
+            <span class="user-greeting">Hello, @UserName!</span>
+            <button class="btn btn-outline-secondary btn-sm ms-2" @onclick="ShowLoginForm">Change</button>
+        </div>
+    }
+    
+    @if (showLoginForm)
+    {
+        <div class="login-modal">
+            <div class="login-modal-content">
+                <h5>Enter Your Name</h5>
+                <input type="text" class="form-control" @bind="tempUserName" @onkeypress="HandleKeyPress" placeholder="Your name" />
+                <div class="login-buttons">
+                    <button class="btn btn-primary btn-sm" @onclick="SaveUserName">Save</button>
+                    <button class="btn btn-secondary btn-sm" @onclick="CancelLogin">Cancel</button>
+                </div>
+            </div>
+        </div>
+        <div class="login-backdrop" @onclick="CancelLogin"></div>
+    }
+</div>
+
+@code {
+    [Parameter] public string UserName { get; set; } = string.Empty;
+    [Parameter] public EventCallback<string> UserNameChanged { get; set; }
+    
+    private bool showLoginForm = false;
+    private string tempUserName = string.Empty;
+
+    private void ShowLoginForm()
+    {
+        tempUserName = UserName;
+        showLoginForm = true;
+    }
+
+    private async Task SaveUserName()
+    {
+        if (!string.IsNullOrWhiteSpace(tempUserName))
+        {
+            UserName = tempUserName.Trim();
+            await UserNameChanged.InvokeAsync(UserName);
+        }
+        showLoginForm = false;
+    }
+
+    private void CancelLogin()
+    {
+        showLoginForm = false;
+        tempUserName = string.Empty;
+    }
+
+    private async Task HandleKeyPress(KeyboardEventArgs e)
+    {
+        if (e.Key == "Enter")
+        {
+            await SaveUserName();
+        }
+        else if (e.Key == "Escape")
+        {
+            CancelLogin();
+        }
+    }
+}
+
+<style>
+    .login-component {
+        position: relative;
+        display: inline-block;
+    }
+
+    .user-info {
+        display: flex;
+        align-items: center;
+    }
+
+    .user-greeting {
+        color: #495057;
+        font-size: 0.9em;
+    }
+
+    .login-modal {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 1050;
+        background: white;
+        border-radius: 8px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+        padding: 0;
+        min-width: 300px;
+    }
+
+    .login-modal-content {
+        padding: 20px;
+    }
+
+    .login-modal h5 {
+        margin-bottom: 15px;
+        color: #495057;
+    }
+
+    .login-buttons {
+        display: flex;
+        gap: 10px;
+        margin-top: 15px;
+        justify-content: flex-end;
+    }
+
+    .login-backdrop {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0,0,0,0.5);
+        z-index: 1040;
+    }
+
+    .btn {
+        border: 1px solid;
+        padding: 4px 12px;
+        font-size: 0.875rem;
+        border-radius: 4px;
+        text-decoration: none;
+        cursor: pointer;
+        transition: all 0.2s ease;
+    }
+
+    .btn-outline-primary {
+        color: #007bff;
+        border-color: #007bff;
+        background-color: transparent;
+    }
+
+    .btn-outline-primary:hover {
+        background-color: #007bff;
+        color: white;
+    }
+
+    .btn-outline-secondary {
+        color: #6c757d;
+        border-color: #6c757d;
+        background-color: transparent;
+    }
+
+    .btn-outline-secondary:hover {
+        background-color: #6c757d;
+        color: white;
+    }
+
+    .btn-primary {
+        background-color: #007bff;
+        border-color: #007bff;
+        color: white;
+    }
+
+    .btn-primary:hover {
+        background-color: #0056b3;
+        border-color: #0056b3;
+    }
+
+    .btn-secondary {
+        background-color: #6c757d;
+        border-color: #6c757d;
+        color: white;
+    }
+
+    .btn-secondary:hover {
+        background-color: #545b62;
+        border-color: #545b62;
+    }
+
+    .btn-sm {
+        padding: 4px 8px;
+        font-size: 0.8em;
+    }
+
+    .ms-2 {
+        margin-left: 8px;
+    }
+
+    .form-control {
+        display: block;
+        width: 100%;
+        padding: 8px 12px;
+        font-size: 1rem;
+        line-height: 1.5;
+        color: #495057;
+        background-color: #fff;
+        border: 1px solid #ced4da;
+        border-radius: 4px;
+        box-sizing: border-box;
+    }
+
+    .form-control:focus {
+        border-color: #80bdff;
+        outline: 0;
+        box-shadow: 0 0 0 0.2rem rgba(0,123,255,0.25);
+    }
+</style>

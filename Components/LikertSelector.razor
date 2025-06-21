@@ -1,0 +1,236 @@
+@namespace MealPlanner.Components
+
+<div class="likert-selector @(IsVertical ? "vertical" : "horizontal")">
+    @if (!string.IsNullOrEmpty(Label))
+    {
+        <label class="likert-label">@Label</label>
+    }
+    
+    @if (!string.IsNullOrEmpty(FoodDescription))
+    {
+        <div class="food-description">
+            <h4>@FoodDescription</h4>
+        </div>
+    }
+    
+    <div class="likert-options">
+        <div class="likert-option @GetOptionClass(1)" @onclick="() => SelectValue(1)">
+            <img src="images/yuck.png" alt="Yuck" class="likert-image" />
+            <span class="likert-text">Yuck</span>
+        </div>
+        
+        <div class="likert-option @GetOptionClass(2)" @onclick="() => SelectValue(2)">
+            <img src="images/meh.png" alt="Meh" class="likert-image" />
+            <span class="likert-text">Meh</span>
+        </div>
+        
+        <div class="likert-option @GetOptionClass(3)" @onclick="() => SelectValue(3)">
+            <img src="images/ok.png" alt="Ok" class="likert-image" />
+            <span class="likert-text">Ok</span>
+        </div>
+        
+        <div class="likert-option @GetOptionClass(4)" @onclick="() => SelectValue(4)">
+            <img src="images/good.png" alt="Good" class="likert-image" />
+            <span class="likert-text">Good</span>
+        </div>
+        
+        <div class="likert-option @GetOptionClass(5)" @onclick="() => SelectValue(5)">
+            <img src="images/great.png" alt="Great" class="likert-image" />
+            <span class="likert-text">Great</span>
+        </div>
+    </div>
+</div>
+
+@code {
+    [Parameter] public string? Label { get; set; }
+    [Parameter] public string? FoodDescription { get; set; }
+    [Parameter] public bool IsVertical { get; set; } = false;
+    [Parameter] public bool IsEnabled { get; set; } = true;
+    [Parameter] public int SelectedValue { get; set; } = 0;
+    [Parameter] public EventCallback<int> SelectedValueChanged { get; set; }
+    [Parameter] public EventCallback<int> OnValueChanged { get; set; }
+
+    private async Task SelectValue(int value)
+    {
+        if (!IsEnabled) return;
+        
+        SelectedValue = value;
+        await SelectedValueChanged.InvokeAsync(value);
+        await OnValueChanged.InvokeAsync(value);
+    }
+
+    private string GetOptionClass(int optionValue)
+    {
+        var classes = new List<string>();
+        
+        if (!IsEnabled)
+        {
+            classes.Add("disabled");
+        }
+        else if (SelectedValue == 0)
+        {
+            // No selection - all options available
+        }
+        else if (SelectedValue == optionValue)
+        {
+            classes.Add("selected");
+        }
+        else
+        {
+            classes.Add("greyed-out");
+        }
+        
+        return string.Join(" ", classes);
+    }
+}
+
+<style>
+    .likert-selector {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        margin: 20px 0;
+    }
+
+    .likert-selector.vertical {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .likert-selector.horizontal {
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+
+    .likert-label {
+        font-weight: bold;
+        margin-bottom: 10px;
+        font-size: 1.1em;
+    }
+
+    .likert-options {
+        display: flex;
+        gap: 15px;
+    }
+
+    .likert-selector.vertical .likert-options {
+        flex-direction: column;
+    }
+
+    .likert-selector.horizontal .likert-options {
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+
+    .likert-option {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 15px;
+        border: 2px solid transparent;
+        border-radius: 12px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        background-color: #f8f9fa;
+        min-width: 80px;
+    }
+
+    .likert-option:hover {
+        background-color: #e9ecef;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+
+    .likert-option.selected {
+        border-color: #007bff;
+        background-color: #e3f2fd;
+        box-shadow: 0 4px 12px rgba(0,123,255,0.3);
+    }
+
+    .likert-image {
+        width: 40px;
+        height: 40px;
+        margin-bottom: 8px;
+        object-fit: contain;
+    }
+
+    .likert-text {
+        font-size: 0.9em;
+        font-weight: 600;
+        color: #495057;
+        text-align: center;
+    }
+
+    .likert-option.selected .likert-text {
+        color: #007bff;
+    }
+
+    .likert-option.greyed-out {
+        opacity: 0.4;
+        pointer-events: none;
+    }
+
+    .likert-option.greyed-out:hover {
+        background-color: #f8f9fa;
+        transform: none;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    .likert-option.disabled {
+        opacity: 0.3;
+        cursor: not-allowed;
+        pointer-events: none;
+    }
+
+    .likert-option.disabled:hover {
+        background-color: #f8f9fa;
+        transform: none;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    .likert-selector.vertical .likert-option {
+        flex-direction: row;
+        justify-content: flex-start;
+        text-align: left;
+        min-width: 200px;
+    }
+
+    .likert-selector.vertical .likert-image {
+        margin-right: 15px;
+        margin-bottom: 0;
+    }
+
+    .food-description {
+        flex: 1;
+        padding-right: 20px;
+        min-width: 200px;
+    }
+
+    .food-description h4 {
+        margin: 0;
+        color: #495057;
+        font-size: 1.1em;
+        font-weight: 600;
+    }
+
+    .likert-selector.horizontal {
+        align-items: flex-start;
+    }
+
+    @@media (max-width: 768px) {
+        .likert-selector.horizontal .likert-options {
+            flex-direction: column;
+        }
+        
+        .likert-option {
+            min-width: 100%;
+            flex-direction: row;
+            justify-content: flex-start;
+        }
+        
+        .likert-image {
+            margin-right: 15px;
+            margin-bottom: 0;
+        }
+    }
+</style>
