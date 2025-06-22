@@ -1,11 +1,23 @@
 @namespace MealPlanner.Components
-@inject IJSRuntime JSRuntime
 @inject ILogger<LoginComponent> Logger
 
 <div class="login-component">
     @if (string.IsNullOrEmpty(UserName))
     {
-        <button class="btn btn-outline-primary btn-sm" @onclick="ShowLoginForm">Login</button>
+        @if (!showLoginForm)
+        {
+            <button class="btn btn-outline-primary btn-sm" @onclick="ShowLoginForm">Login</button>
+        }
+        else
+        {
+            <div class="login-form">
+                <input type="text" class="form-control form-control-sm" @bind="tempUserName" @onkeypress="HandleKeyPress" placeholder="Enter your name" @ref="nameInput" />
+                <div class="login-buttons">
+                    <button class="btn btn-primary btn-sm" @onclick="SaveUserName">Save</button>
+                    <button class="btn btn-secondary btn-sm" @onclick="CancelLogin">Cancel</button>
+                </div>
+            </div>
+        }
     }
     else
     {
@@ -16,29 +28,11 @@
     }
 </div>
 
-<!-- Bootstrap Modal -->
-<div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-sm">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="loginModalLabel">Enter Your Name</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" @onclick="CancelLogin"></button>
-            </div>
-            <div class="modal-body">
-                <input type="text" class="form-control" @bind="tempUserName" @onkeypress="HandleKeyPress" placeholder="Your name" @ref="nameInput" />
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" @onclick="CancelLogin">Cancel</button>
-                <button type="button" class="btn btn-primary" @onclick="SaveUserName">Save</button>
-            </div>
-        </div>
-    </div>
-</div>
-
 @code {
     [Parameter] public string UserName { get; set; } = string.Empty;
     [Parameter] public EventCallback<string> UserNameChanged { get; set; }
     
+    private bool showLoginForm = false;
     private string tempUserName = string.Empty;
     private ElementReference nameInput;
 
@@ -46,23 +40,18 @@
     {
         Logger.LogInformation("ShowLoginForm called. Current UserName: '{UserName}'", UserName);
         tempUserName = UserName;
+        showLoginForm = true;
         
+        // Focus the input after the form is shown
+        await Task.Delay(100);
         try
         {
-            Logger.LogInformation("Attempting to show modal via JSRuntime");
-            await JSRuntime.InvokeVoidAsync("modalHelper.show", "loginModal");
-            Logger.LogInformation("Modal show command completed successfully");
-            
-            // Focus the input after modal is shown
-            await Task.Delay(300);
-            Logger.LogInformation("Attempting to focus input field");
             await nameInput.FocusAsync();
-            Logger.LogInformation("Input focus completed successfully");
+            Logger.LogInformation("Input focused successfully");
         }
         catch (Exception ex)
         {
-            Logger.LogError(ex, "Error showing modal");
-            Console.WriteLine($"Error showing modal: {ex.Message}");
+            Logger.LogError(ex, "Error focusing input");
         }
     }
 
@@ -79,35 +68,21 @@
                 await UserNameChanged.InvokeAsync(UserName);
                 Logger.LogInformation("UserNameChanged event invoked successfully");
             }
-            await HideModal();
+            showLoginForm = false;
+            tempUserName = string.Empty;
             Logger.LogInformation("SaveUserName completed successfully");
         }
         catch (Exception ex)
         {
             Logger.LogError(ex, "Error in SaveUserName");
-            Console.WriteLine($"Error saving user name: {ex.Message}");
         }
     }
 
-    private async Task CancelLogin()
+    private void CancelLogin()
     {
+        Logger.LogInformation("CancelLogin called");
         tempUserName = string.Empty;
-        await HideModal();
-    }
-
-    private async Task HideModal()
-    {
-        try
-        {
-            Logger.LogInformation("Attempting to hide modal via JSRuntime");
-            await JSRuntime.InvokeVoidAsync("modalHelper.hide", "loginModal");
-            Logger.LogInformation("Modal hide command completed successfully");
-        }
-        catch (Exception ex)
-        {
-            Logger.LogError(ex, "Error hiding modal");
-            Console.WriteLine($"Error hiding modal: {ex.Message}");
-        }
+        showLoginForm = false;
     }
 
     private async Task HandleKeyPress(KeyboardEventArgs e)
@@ -118,7 +93,7 @@
         }
         else if (e.Key == "Escape")
         {
-            await CancelLogin();
+            CancelLogin();
         }
     }
 }
@@ -136,5 +111,35 @@
     .user-greeting {
         color: #495057;
         font-size: 0.9em;
+    }
+
+    .login-form {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        background: #f8f9fa;
+        padding: 8px;
+        border-radius: 6px;
+        border: 1px solid #dee2e6;
+    }
+
+    .login-form input {
+        min-width: 150px;
+    }
+
+    .login-buttons {
+        display: flex;
+        gap: 4px;
+    }
+
+    @@media (max-width: 768px) {
+        .login-form {
+            flex-direction: column;
+            align-items: stretch;
+        }
+        
+        .login-form input {
+            margin-bottom: 8px;
+        }
     }
 </style>
