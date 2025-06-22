@@ -1,5 +1,6 @@
 ﻿@inherits LayoutComponentBase
 @inject UserStateService UserState
+@inject ILogger<MainLayout> Logger
 
 <div class="page">
     <div class="sidebar">
@@ -28,7 +29,19 @@
 @code {
     private void OnUserNameChanged(string newUserName)
     {
-        UserState.CurrentUser = newUserName;
-        StateHasChanged();
+        Logger.LogInformation("OnUserNameChanged called in MainLayout with value: '{NewUserName}'", newUserName);
+        try
+        {
+            Logger.LogInformation("Setting UserState.CurrentUser to '{NewUserName}'", newUserName);
+            UserState.CurrentUser = newUserName;
+            Logger.LogInformation("Calling StateHasChanged()");
+            StateHasChanged();
+            Logger.LogInformation("OnUserNameChanged completed successfully");
+        }
+        catch (Exception ex)
+        {
+            Logger.LogError(ex, "Error in OnUserNameChanged");
+            throw;
+        }
     }
 }

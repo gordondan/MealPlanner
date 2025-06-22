@@ -17,6 +17,26 @@
     <Routes />
     <script src="@Assets["lib/bootstrap/dist/js/bootstrap.bundle.min.js"]"></script>
     <script src="@Assets["js/modal-helper.js"]"></script>
+    <script>
+        console.log('Inline script executing after modal-helper.js');
+        console.log('Bootstrap after all scripts:', typeof window.bootstrap);
+        console.log('modalHelper after all scripts:', typeof window.modalHelper);
+        
+        // Add global error handler
+        window.addEventListener('error', function(e) {
+            console.error('Global JavaScript error:', e.error);
+            console.error('Error message:', e.message);
+            console.error('Error filename:', e.filename);
+            console.error('Error line:', e.lineno);
+            console.error('Error column:', e.colno);
+        });
+        
+        // Add unhandled promise rejection handler
+        window.addEventListener('unhandledrejection', function(e) {
+            console.error('Unhandled promise rejection:', e.reason);
+            console.error('Promise:', e.promise);
+        });
+    </script>
     <script src="_framework/blazor.web.js"></script>
 </body>
 

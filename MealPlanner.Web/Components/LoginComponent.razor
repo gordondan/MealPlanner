@@ -1,5 +1,6 @@
 @namespace MealPlanner.Components
 @inject IJSRuntime JSRuntime
+@inject ILogger<LoginComponent> Logger
 
 <div class="login-component">
     @if (string.IsNullOrEmpty(UserName))
@@ -43,28 +44,49 @@
 
     private async Task ShowLoginForm()
     {
+        Logger.LogInformation("ShowLoginForm called. Current UserName: '{UserName}'", UserName);
         tempUserName = UserName;
+        
         try
         {
+            Logger.LogInformation("Attempting to show modal via JSRuntime");
             await JSRuntime.InvokeVoidAsync("modalHelper.show", "loginModal");
+            Logger.LogInformation("Modal show command completed successfully");
+            
             // Focus the input after modal is shown
             await Task.Delay(300);
+            Logger.LogInformation("Attempting to focus input field");
             await nameInput.FocusAsync();
+            Logger.LogInformation("Input focus completed successfully");
         }
         catch (Exception ex)
         {
+            Logger.LogError(ex, "Error showing modal");
             Console.WriteLine($"Error showing modal: {ex.Message}");
         }
     }
 
     private async Task SaveUserName()
     {
-        if (!string.IsNullOrWhiteSpace(tempUserName))
+        Logger.LogInformation("SaveUserName called. TempUserName: '{TempUserName}'", tempUserName);
+        try
         {
-            UserName = tempUserName.Trim();
-            await UserNameChanged.InvokeAsync(UserName);
+            if (!string.IsNullOrWhiteSpace(tempUserName))
+            {
+                var trimmedName = tempUserName.Trim();
+                Logger.LogInformation("Setting UserName from '{OldName}' to '{NewName}'", UserName, trimmedName);
+                UserName = trimmedName;
+                await UserNameChanged.InvokeAsync(UserName);
+                Logger.LogInformation("UserNameChanged event invoked successfully");
+            }
+            await HideModal();
+            Logger.LogInformation("SaveUserName completed successfully");
         }
-        await HideModal();
+        catch (Exception ex)
+        {
+            Logger.LogError(ex, "Error in SaveUserName");
+            Console.WriteLine($"Error saving user name: {ex.Message}");
+        }
     }
 
     private async Task CancelLogin()
@@ -77,10 +99,13 @@
     {
         try
         {
+            Logger.LogInformation("Attempting to hide modal via JSRuntime");
             await JSRuntime.InvokeVoidAsync("modalHelper.hide", "loginModal");
+            Logger.LogInformation("Modal hide command completed successfully");
         }
         catch (Exception ex)
         {
+            Logger.LogError(ex, "Error hiding modal");
             Console.WriteLine($"Error hiding modal: {ex.Message}");
         }
     }
