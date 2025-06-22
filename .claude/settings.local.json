@@ -14,7 +14,8 @@
       "Bash(cp:*)",
       "Bash(dotnet sln:*)",
       "Bash(dotnet restore:*)",
-      "Bash(dotnet test:*)"
+      "Bash(dotnet test:*)",
+      "Bash(git rm:*)"
     ],
     "deny": []
   }
