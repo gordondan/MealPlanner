@@ -15,7 +15,8 @@
       "Bash(dotnet sln:*)",
       "Bash(dotnet restore:*)",
       "Bash(dotnet test:*)",
-      "Bash(git rm:*)"
+      "Bash(git rm:*)",
+      "Bash(find:*)"
     ],
     "deny": []
   }
